@@ -10,6 +10,8 @@
 #include "M5ModuleLLM.h"
 
 #define MODEL "qwen2.5-0.5b"
+#define serialTX 1
+#define serialRX 2
 
 M5ModuleLLM module_llm;
 String llm_work_id;
@@ -43,7 +45,7 @@ void setup()
   M5Cardputer.Display.drawString(data, 4, M5Cardputer.Display.height() - 24);
 
   /* Init module serial port */
-  Serial2.begin(115200, SERIAL_8N1, 1, 2);
+  Serial2.begin(115200, SERIAL_8N1, serialTX, serialRX); // シリアル通信のポート指定、上の方でdefineしている
 
   /* Init module */
   module_llm.begin(&Serial2);
@@ -68,7 +70,7 @@ void setup()
   canvas.pushSprite(4, 4);
 
   m5_module_llm::ApiLlmSetupConfig_t llm_config;
-  llm_config.model = MODEL;
+  // llm_config.model = MODEL; //これのコメントアウトを外すとdefineで指定したものが使われる。そのままだとデフォのモデルになる
   llm_config.max_token_len = 1023;
   llm_config.prompt = "Please answer in Japanese.";
   llm_work_id = module_llm.llm.setup(llm_config);
