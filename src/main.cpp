@@ -9,6 +9,8 @@
 #include "M5GFX.h"
 #include "M5ModuleLLM.h"
 
+#define MODEL "qwen2.5-0.5b"
+
 M5ModuleLLM module_llm;
 String llm_work_id;
 String received_question;
@@ -64,8 +66,11 @@ void setup()
   /* Setup LLM module and save returned work id */
   canvas.println(">> Setup LLM..");
   canvas.pushSprite(4, 4);
+
   m5_module_llm::ApiLlmSetupConfig_t llm_config;
+  llm_config.model = MODEL;
   llm_config.max_token_len = 1023;
+  llm_config.prompt = "Please answer in Japanese.";
   llm_work_id = module_llm.llm.setup(llm_config);
 
   canvas.println(">> Setup finish");
