@@ -10,8 +10,8 @@
 #include "M5ModuleLLM.h"
 
 #define MODEL "qwen2.5-0.5b"
-#define serialTX 1
-#define serialRX 2
+#define serialTX 1 // LLM630 Compute Moduleの時は2
+#define serialRX 2 // LLM630 Compute Moduleの時は1
 
 M5ModuleLLM module_llm;
 String llm_work_id;
